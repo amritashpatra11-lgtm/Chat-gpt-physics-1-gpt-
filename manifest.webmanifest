@@ -1,0 +1,17 @@
+{
+  "name": "Physics Explorer",
+  "short_name": "Physics Lab",
+  "description": "Interactive physics simulations designed for low-end devices.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "icons": [
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

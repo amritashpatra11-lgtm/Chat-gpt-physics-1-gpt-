@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07111f" />
+  <meta name="description" content="Physics Explorer — interactive, low-end-device-friendly physics simulations." />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="preload" href="./styles.css" as="style" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>Physics Explorer</title>
+</head>
+<body>
+  <noscript>This application requires JavaScript.</noscript>
+  <div id="app" class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="brand-row">
+        <button id="sidebarClose" class="icon-button mobile-only" aria-label="Close navigation">×</button>
+        <div class="brand-mark" aria-hidden="true">Φ</div>
+        <div>
+          <div class="brand-name">Physics Explorer</div>
+          <div class="brand-subtitle">Learn by changing reality</div>
+        </div>
+      </div>
+
+      <button id="newLabButton" class="primary-button full-width">＋ New exploration</button>
+
+      <nav class="nav-stack" aria-label="Sections">
+        <button class="nav-item active" data-view="home"><span>⌂</span> Discover</button>
+        <button class="nav-item" data-view="catalog"><span>▦</span> All simulations</button>
+        <button class="nav-item" data-view="favorites"><span>☆</span> Saved labs</button>
+        <button class="nav-item" data-view="challenges"><span>⚑</span> Challenges</button>
+      </nav>
+
+      <div class="sidebar-section-label">Levels</div>
+      <div class="level-list">
+        <button class="level-filter active" data-level="all">All levels <span>100</span></button>
+        <button class="level-filter" data-level="School">School Physics <span>100</span></button>
+        <button class="level-filter" data-level="Olympiad">Olympiad Physics <span>Coming</span></button>
+        <button class="level-filter" data-level="Research">Research Physics <span>Coming</span></button>
+      </div>
+
+      <div class="sidebar-spacer"></div>
+      <section class="performance-card" aria-labelledby="performanceTitle">
+        <div class="switch-row">
+          <div>
+            <strong id="performanceTitle">Low performance mode</strong>
+            <small>30 FPS · fewer trails · no blur</small>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="performanceToggle" />
+            <span class="switch-track"></span>
+          </label>
+        </div>
+      </section>
+      <button id="installButton" class="secondary-button full-width" hidden>Install app</button>
+      <div class="sidebar-footer">Runs offline after first visit</div>
+    </aside>
+
+    <div id="sidebarScrim" class="sidebar-scrim" hidden></div>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button id="sidebarOpen" class="icon-button mobile-only" aria-label="Open navigation">☰</button>
+        <div id="breadcrumb" class="breadcrumb">Discover</div>
+        <div class="topbar-actions">
+          <button id="themeToggle" class="icon-button" aria-label="Toggle theme">◐</button>
+          <button id="focusSearch" class="icon-button" aria-label="Search simulations">⌕</button>
+        </div>
+      </header>
+
+      <section id="homeView" class="view active" aria-labelledby="heroTitle">
+        <div class="hero">
+          <div class="hero-badge">INTERACTIVE PHYSICS LAB</div>
+          <h1 id="heroTitle">What do you want to understand?</h1>
+          <p>Ask a physics question or open a simulator. Change values, observe motion, inspect vectors, and connect equations to what you see.</p>
+
+          <form id="questionForm" class="question-box">
+            <textarea id="questionInput" rows="2" placeholder="Try: Why does a projectile follow a parabola?" aria-label="Ask a physics question"></textarea>
+            <div class="question-actions">
+              <div class="suggestion-chips" aria-label="Suggested questions">
+                <button type="button" data-question="Show projectile motion">Projectile</button>
+                <button type="button" data-question="Explore Hooke's law">Spring</button>
+                <button type="button" data-question="Open Ohm's law">Circuit</button>
+              </div>
+              <button class="send-button" type="submit" aria-label="Submit question">↑</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="content-width">
+          <div class="section-heading-row">
+            <div>
+              <div class="eyebrow">START HERE</div>
+              <h2>Featured laboratories</h2>
+            </div>
+            <button class="text-button" data-view-target="catalog">See all 100 →</button>
+          </div>
+          <div id="featuredGrid" class="featured-grid" aria-live="polite">
+            <div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>
+          </div>
+
+          <div class="level-showcase">
+            <article class="level-card school">
+              <div class="level-number">01</div><h3>School Physics</h3><p>100 core mechanics, energy, waves, electricity, optics, and modern physics labs.</p><button data-category-jump="Mechanics">Explore foundation →</button>
+            </article>
+            <article class="level-card olympiad">
+              <div class="level-number">02</div><h3>Olympiad Physics</h3><p>Advanced problem-solving labs designed for non-routine reasoning and multiple representations.</p><span class="status-pill">Roadmap ready</span>
+            </article>
+            <article class="level-card research">
+              <div class="level-number">03</div><h3>Research Physics</h3><p>Numerical experiments for N-body systems, relativity, quantum dynamics, and particle physics.</p><span class="status-pill">Architecture ready</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="catalogView" class="view" aria-labelledby="catalogTitle">
+        <div class="catalog-header content-width">
+          <div>
+            <div class="eyebrow">SIMULATION LIBRARY</div>
+            <h1 id="catalogTitle">Explore 100 physics simulations</h1>
+            <p>Search by concept, equation, or topic. Fully interactive flagship labs are marked “Live”.</p>
+          </div>
+          <div class="catalog-tools">
+            <label class="search-field">
+              <span>⌕</span>
+              <input id="catalogSearch" type="search" placeholder="Search simulations" autocomplete="off" />
+            </label>
+            <select id="categorySelect" aria-label="Filter by category">
+              <option value="all">All topics</option>
+            </select>
+          </div>
+        </div>
+        <div id="catalogStats" class="catalog-stats content-width"></div>
+        <div id="catalogGrid" class="catalog-grid content-width" aria-live="polite"></div>
+      </section>
+
+      <section id="favoritesView" class="view content-width narrow-view" aria-labelledby="favoritesTitle">
+        <div class="eyebrow">YOUR COLLECTION</div><h1 id="favoritesTitle">Saved laboratories</h1>
+        <div id="favoritesGrid" class="catalog-grid"></div>
+      </section>
+
+      <section id="challengesView" class="view content-width narrow-view" aria-labelledby="challengesTitle">
+        <div class="eyebrow">PRACTICE</div><h1 id="challengesTitle">Physics challenges</h1>
+        <div id="challengeList" class="challenge-list"></div>
+      </section>
+
+      <section id="labView" class="view lab-view" aria-labelledby="labTitle">
+        <div class="lab-header">
+          <button id="backButton" class="secondary-button">← Library</button>
+          <div class="lab-title-block">
+            <div id="labMeta" class="eyebrow">MECHANICS · LIVE LAB</div>
+            <h1 id="labTitle">Simulation</h1>
+          </div>
+          <button id="favoriteButton" class="icon-button favorite-button" aria-label="Save simulation">☆</button>
+        </div>
+        <div id="labMount" class="lab-mount"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
